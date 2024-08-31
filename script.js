@@ -1,14 +1,34 @@
-let list;
+let list = [];
 
-fetch('./data.json')
-    .then(response => {return response.json();})
-    .then(data => {
-    console.log(data.list);
-    for (const i in data.list) {
-        addLinkDiv(data.list[i])
-    }
-    })
+/*
+list= [{
+    "name":"Kaguya-Sama",
+    "length":"38",
+    "score":"9",
+    "image":"https://cdn.myanimelist.net/images/anime/1295/106551.jpg"
+},
+{
+    "name":"Shirogane-Sama",
+    "length":"1008",
+    "score":"5.4",
+    "image":"https://cdn.myanimelist.net/images/anime/1295/106551.jpg"
+}]
 
+localStorage.setItem("list", JSON.stringify(list))
+*/
+
+
+function saveData(){
+        localStorage.setItem("list", JSON.stringify(data))
+        console.log(JSON.parse(localStorage.getItem("list")))
+}
+
+function loadData(){
+    data = JSON.parse(localStorage.getItem("list"));
+    for (const i in data) {
+        addLinkDiv(data[i])
+}
+}
 
 function addLinkDiv(stuff) {
     const newLink = document.createElement("a");
@@ -41,16 +61,6 @@ function addLinkDiv(stuff) {
     release_container.appendChild(newLink);
 }
 
-function appendJSON(diction) {
-    fetch('./data.json')
-    .then(response => {return response.json();})
-    .then(data => {
-        data.list.push(diction)
-        console.log(data.list);
-    })
-
-}
-
 function ButtonTemp() {
     let aniName = prompt("Enter new anime name:","");
     if (aniName != null) {
@@ -59,11 +69,13 @@ function ButtonTemp() {
             let aniScore = prompt("Enter the mal score of this anime:")
             if (aniLength != null) {
                 let aniImg = prompt("Enter a image of this anime from a link:")
-                console.log(aniName + aniLength+aniScore+aniImg);
-                addLinkDiv({"name":aniName,"length":aniLength,"score":aniScore,"image":aniImg})
-                appendJSON({"name":aniName,"length":aniLength,"score":aniScore,"image":aniImg})
+                addLinkDiv({"name":aniName,"length":aniLength,"score":aniScore,"image":aniImg});
+                data.push({"name":aniName,"length":aniLength,"score":aniScore,"image":aniImg});
             }
         }
     }
 }
+
+
+loadData()
 
